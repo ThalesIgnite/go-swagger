@@ -52,6 +52,10 @@ func (s *Server) Execute(args []string) error {
 	}
 	setDebug(cfg)
 
+	if s.ExistingModels != "" {
+		s.SkipModels = true
+	}
+
 	opts := &generator.GenOpts{
 		Spec:              string(s.Spec),
 		Target:            string(s.Target),
@@ -80,6 +84,7 @@ func (s *Server) Execute(args []string) error {
 		Name:              s.Name,
 		FlagStrategy:      s.FlagStrategy,
 		CompatibilityMode: s.CompatibilityMode,
+		ExistingModels:    s.ExistingModels,
 	}
 
 	if e := opts.EnsureDefaults(false); e != nil {
